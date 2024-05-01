@@ -1,0 +1,27 @@
+@import url(https://fonts.googleapis.com/css?family=Jura:300,regular,500,600,700);
+@import "./variables.scss";
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+button {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+}
+
+input {
+	outline: none;
+}
+
+body {
+	background-color: $main-color;
+	color: $text-color;
+	font-family: "Jura", sans-serif;
+	padding: 32px;
+	padding-bottom: 0;
+	font-size: 14px;
+	
+}

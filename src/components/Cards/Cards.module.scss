@@ -1,0 +1,50 @@
+@import "../../";
+
+.container {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(332px, 1fr));
+  width: 100%;
+  gap: 16px;
+  grid-area: cards;
+  margin-right: 340px;
+  height: calc(100vh - 112px);
+  overflow-y: scroll;
+  padding-bottom: 32px;
+  padding-right: 8px;
+  position: relative;
+  scrollbar-width: thin;
+  scrollbar-color: $scrollbar-color $scrollbar-bg;
+}
+
+.gradientContainer {
+  position: fixed;
+  pointer-events: none;
+  height: calc(100vh - 112px);
+  width: calc(100vw - 416px);
+  z-index: 100;
+}
+
+.gradientTop,
+.gradientBottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 32px;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.gradientTop {
+  top: 0;
+  background: linear-gradient(0deg, rgba(18,20,27,0) 0%, rgba(18,20,27,1) 100%);
+}
+
+.gradientBottom {
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(18,20,27,0) 0%, rgba(18,20,27,1) 100%);
+}
+
+.hidden {
+  display: none;
+}

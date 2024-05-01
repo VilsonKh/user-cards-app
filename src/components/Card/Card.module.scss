@@ -1,0 +1,82 @@
+@import "../../variables.scss";
+@import "../../mixins.scss";
+.heading {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	margin-bottom: 16px;
+}
+
+.container {
+	background-color: $secondary-color;
+	border-radius: 16px;
+	min-height: 218px;
+	max-height: 240px;
+	padding: 20px;
+	border: 1px solid transparent;
+	transition: border 0.2s linear;
+
+	&:hover {
+		border: 1px solid $accent-color;
+	}
+}
+.active {
+	border: 1px solid $accent-color;
+}
+
+.avatar {
+	height: 56px;
+	width: 56px;
+	overflow: hidden;
+	flex-shrink: 0;
+
+	& img {
+		height: 100%;
+		width: 100%;
+		object-fit: cover;
+		border-radius: 50%;
+	}
+}
+
+.name {
+	font-size: 20px;
+	font-weight: 700;
+	margin-bottom: 8px;
+}
+
+.email {
+	font-weight: 500;
+}
+
+.info {
+	display: grid;
+	gap: 16px;
+}
+
+.infoLine {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	align-items: baseline;
+}
+
+.label {
+	@include label;
+	margin-right: 16px;
+	min-width: 57px;
+}
+
+.infoContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.infoItem {
+	font-weight: 500;
+}
+
+.location {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 90%;
+}

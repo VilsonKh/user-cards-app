@@ -1,0 +1,16 @@
+@import "../variables.scss";
+
+.container {
+	position: relative;
+}
+
+.deleteButton {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 44px;
+	height: 44px;
+	background: $button-bg;
+	border-radius: 0 16px 0 16px;
+	border: 1px solid $button-border;
+}

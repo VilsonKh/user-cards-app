@@ -1,0 +1,18 @@
+@import "../../variables.scss";
+
+.refreshButton {
+	color: $accent-color;
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+}
+
+.container {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.img {
+	width: 30px;
+}

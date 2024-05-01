@@ -1,0 +1,61 @@
+@import "../../variables.scss";
+@import "../../mixins.scss";
+
+.container {
+	width: 332px;
+  height: calc(100vh - 142px);
+	flex-shrink: 0;
+	padding: 24px;
+	background-color: $secondary-color;
+	border-radius: 16px;
+	position: fixed;
+	right: 32px;
+}
+
+.heading {
+	font-size: 20px;
+	font-weight: 600;
+	padding-bottom: 24px;
+	border-bottom: 1px solid $border-color;
+}
+
+.ageGroups {
+	padding: 24px 0;
+	border-bottom: 1px solid $border-color;
+
+}
+
+.infoLine {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	align-items: baseline;
+	gap: 16px;
+}
+
+.content {
+	display: grid;
+	gap: 16px;
+}
+
+.subtitle {
+	font-size: 16px;
+	font-weight: 600;
+	margin-bottom: 16px;
+}
+
+
+
+.label {
+	@include label;
+	min-width: 44px;
+}
+
+.countContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.genderGroups {
+	padding: 24px 0;
+}
