@@ -3,26 +3,25 @@
 
 .container {
 	width: 332px;
-  height: calc(100vh - 142px);
+	height: calc(100vh - 142px);
 	flex-shrink: 0;
 	padding: 24px;
 	background-color: $secondary-color;
 	border-radius: 16px;
 	position: fixed;
 	right: 32px;
+
 }
 
 .heading {
 	font-size: 20px;
 	font-weight: 600;
 	padding-bottom: 24px;
-	border-bottom: 1px solid $border-color;
 }
 
-.ageGroups {
+.group {
 	padding: 24px 0;
-	border-bottom: 1px solid $border-color;
-
+	border-top: 1px solid $border-color;
 }
 
 .infoLine {
@@ -43,8 +42,6 @@
 	margin-bottom: 16px;
 }
 
-
-
 .label {
 	@include label;
 	min-width: 44px;
@@ -56,6 +53,9 @@
 	gap: 12px;
 }
 
-.genderGroups {
-	padding: 24px 0;
+
+.skeleton {
+	position: fixed !important;
+	right: 32px;
+	width: 332px;
 }

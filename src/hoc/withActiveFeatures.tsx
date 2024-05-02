@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import styles from "./withActiveFeatures.module.scss";
-import { ActiveContext } from "../context";
+import { ActiveContext } from "../context/context";
 import deleteIcon from "../assets/delete-icon.svg";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { fetchData } from "../service/service";
+import * as reactQuery from "@tanstack/react-query";
+
 import type { ICard } from "../components/Card/Card";
 
 interface withID {
@@ -16,14 +16,14 @@ export const withActiveFeatures = <T extends withID>(WrappedComponent: React.Com
 
 		const isActive = activeId === props.id;
 
-		const queryClientState = useQueryClient();
-
-		useQuery<ICard[]>({ queryKey: ["cards"], queryFn: fetchData, staleTime: Infinity });
+		const queryClientState = reactQuery.useQueryClient();
 
 		const removeItem = (itemId: string) => {
 			queryClientState.setQueryData(["cards"], (oldData: { results: ICard[] }) => ({
 				...oldData,
-				results: oldData.results.filter((item) => item.login.uuid !== itemId),
+				results: oldData.results.filter((item) => {
+					if (item.login) item.login.uuid !== itemId;
+				}),
 			}));
 		};
 

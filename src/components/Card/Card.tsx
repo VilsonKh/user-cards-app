@@ -20,10 +20,12 @@ export interface ICard {
 		large: string;
 		thumbnail: string;
 	};
-	isActive: boolean;
-	login: {
+	isActive?: boolean;
+	login?: {
 		uuid: string;
-	}
+	};
+	id: string;
+	gender?: string;
 }
 
 const Card: React.FC<ICard> = ({ name, email, cell, dob, location, picture, isActive }) => {

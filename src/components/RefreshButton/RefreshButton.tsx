@@ -1,10 +1,9 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import styles from "./RefreshButton.module.scss";
 import loadingImg from "../../assets/loading.svg";
 import { fetchData } from "../../service/service";
 
 const RefreshButton = () => {
-	const queryClient = useQueryClient();
 
 	const { refetch, isFetching } = useQuery({ queryKey: ["cards"], queryFn: fetchData, enabled: false });
 

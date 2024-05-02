@@ -1,72 +1,62 @@
 import { useQuery } from "@tanstack/react-query";
 import Card from "../Card/Card";
 import styles from "./Cards.module.scss";
-import { searchUsers, useDebouncer } from "../../utils";
+import { searchUsers, useDebouncer } from "../../utils/utils";
+import type { IUser } from "../../utils/utils";
 import { fetchData } from "../../service/service";
 import { withActiveFeatures } from "../../hoc/withActiveFeatures";
-import { useEffect, useRef, useState } from "react";
-import { ActiveContext } from "../../context";
-const Cards = ({ userInput }: { userInput: string }) => {
-	const [activeId, setActiveId] = useState<string | null>(null);
+import { useContext, useEffect, useState } from "react";
+import { ActiveContext, UserInputContext } from "../../context/context";
+import CardSkeletons from "../../ui/skeleton/CardSkeletons";
+import useScrollGradient from "../../utils/useScrollGradient";
 
-	const { isPending, error, data } = useQuery({
+const Cards = () => {
+	const [activeId, setActiveId] = useState<string | null>(null);
+	const { listRef, atTop, atBottom } = useScrollGradient();
+	const [filteredData, setFilteredData] = useState<IUser[] | []>([]);
+	const { isPending, data } = useQuery({
 		queryKey: ["cards"],
 		queryFn: fetchData,
+		staleTime: Infinity,
 	});
 
-	const debouncedValue = useDebouncer(userInput, 300);
+	const { userInput } = useContext(UserInputContext);
 
-	const [atTop, setAtTop] = useState<boolean>(true);
-	const [atBottom, setAtBottom] = useState<boolean>(false);
-	const listRef = useRef<HTMLDivElement>(null);
+	const debouncedValue = useDebouncer(userInput);
 
 	useEffect(() => {
-		const element = listRef.current;
-		if (element) {
-			const scrollHeight = element.scrollHeight;
-			const clientHeight = element.clientHeight;
-			if (scrollHeight > clientHeight) {
-				handleScroll();
-			}
+		if (data && debouncedValue !== undefined) {
+			const filtered = searchUsers(data.results, debouncedValue);
+			if (filtered) setFilteredData(filtered);
 		}
-	}, [data]);
+	}, [debouncedValue, data]);
+
+	console.log(data)
 
 	if (isPending) {
-		return <div>Loading...</div>;
+		return (
+			<div className={styles.container}>
+				<CardSkeletons count={16} />
+			</div>
+		);
 	}
 
-	if (error) {
-		return <div>Error</div>;
-	}
-
-	const handleScroll = () => {
-		const element = listRef.current;
-		if (element) {
-			const atTop = element.scrollTop > 0 ? false : true;
-			const atBottom = element.scrollHeight - element.scrollTop <= element.clientHeight + 32;
-      setAtTop(atTop);
-      setAtBottom(atBottom);
-		}
-
-	};
-
-	const filteredData = searchUsers(data.results, debouncedValue);
+	console.log("Cards");
 
 	return (
 		<ActiveContext.Provider value={{ activeId, setActiveId }}>
 			<div
 				className={styles.container}
 				ref={listRef}
-				onScroll={handleScroll}
 			>
 				<div className={styles.gradientContainer}>
 					<div className={`${styles.gradientTop} ${atTop ? styles.hidden : ""}`}></div>
 					<div className={`${styles.gradientBottom} ${atBottom ? styles.hidden : ""}`}></div>
 				</div>
+				{/* TODO: появляется no data после того как данные получены с сервера */}
 				{filteredData.length > 0 ? (
 					filteredData.map((card) => {
 						const ActiveUser = withActiveFeatures(Card);
-           
 						return (
 							<ActiveUser
 								id={card.login.uuid}
