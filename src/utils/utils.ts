@@ -27,11 +27,7 @@ export function countUsersByAgeGroup(users: IAgeGroupUser[]) {
 	return ageGroups;
 }
 
-interface IGenderUser {
-	gender: string;
-}
-
-export function countUsersByGenderGroup(users: IGenderUser[] | undefined) {
+export function countUsersByGenderGroup(users: ICard[] | undefined) {
 	const genderGroups = {
 		male: 0,
 		female: 0,
@@ -60,12 +56,12 @@ export interface IUser extends ICard {
 	};
 }
 
-export function searchUsers(users: IUser[], searchTerm: string | null): IUser[] | null {
+export function searchUsers(users: ICard[], searchTerm: string | null): ICard[] | null {
 	if (!searchTerm) return users;
 
 	const normalizedSearchTerm = searchTerm.toLowerCase();
 
-	return users.filter((user: IUser) => {
+	return users.filter((user: ICard) => {
 		const fullName = `${user.name.first} ${user.name.last}`.toLowerCase();
 		const email = user.email.toLowerCase();
 		const cell = user.cell.replace(/[^\d]/g, "");
@@ -82,18 +78,22 @@ export function searchUsers(users: IUser[], searchTerm: string | null): IUser[] 
 	});
 }
 
-export const useDebouncer = (value: string | null, delay: number = 300): string | null => {
+export const useDebouncer = (value: string | null, delay: number = 300, setInput?: (data: string | null) => void): string | null => {
 	const [debouncedValue, setDebouncedValue] = useState<string | null>(value);
 
 	useEffect(() => {
 		const handler = setTimeout(() => {
-			setDebouncedValue(value);
+			if (setInput) {
+				setInput(value);
+			} else {
+				setDebouncedValue(value);
+			}
 		}, delay);
 
 		return () => {
 			clearTimeout(handler);
 		};
-	});
+	},[value,delay, setInput]);
 
 	return debouncedValue;
 };

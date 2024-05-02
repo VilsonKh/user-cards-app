@@ -1,10 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 
-/**
- * Custom hook that tracks the scroll position of a scrollable element and indicates whether the user is at the top or bottom.
- *
- * @returns An object containing the ref to the scrollable element, a boolean indicating if the user is at the top, and a boolean indicating if the user is at the bottom.
- */
 const useScrollGradient = (): {
 	listRef: React.RefObject<HTMLDivElement>;
 	atTop: boolean;

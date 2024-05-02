@@ -10,7 +10,11 @@ interface withID {
 	id: string;
 }
 
-export const withActiveFeatures = <T extends withID>(WrappedComponent: React.ComponentType<T>) => {
+// interface IActiveCardProps extends ICard {
+// 	isActive: boolean;
+// }
+
+export const withActiveFeatures = <T extends ICard & withID>(WrappedComponent: React.ComponentType<T>) => {
 	return (props: T) => {
 		const { activeId, setActiveId } = useContext(ActiveContext);
 
@@ -21,14 +25,13 @@ export const withActiveFeatures = <T extends withID>(WrappedComponent: React.Com
 		const removeItem = (itemId: string) => {
 			queryClientState.setQueryData(["cards"], (oldData: { results: ICard[] }) => ({
 				...oldData,
-				results: oldData.results.filter((item) => {
-					if (item.login) item.login.uuid !== itemId;
-				}),
+				results: oldData.results.filter((item) => item.login && item.login.uuid !== itemId),
 			}));
 		};
 
 		const handleSetActive = () => {
 			setActiveId(isActive ? null : props.id);
+			console.log(activeId);
 		};
 		return (
 			<div

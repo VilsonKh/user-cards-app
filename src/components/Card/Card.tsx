@@ -1,3 +1,4 @@
+import React from "react";
 import styles from "./Card.module.scss";
 
 export interface ICard {
@@ -15,6 +16,9 @@ export interface ICard {
 		city: string;
 		state: string;
 		country: string;
+		street:{
+			name:string
+		}
 	};
 	picture: {
 		large: string;
@@ -24,11 +28,10 @@ export interface ICard {
 	login?: {
 		uuid: string;
 	};
-	id: string;
 	gender?: string;
 }
 
-const Card: React.FC<ICard> = ({ name, email, cell, dob, location, picture, isActive }) => {
+const Card: React.FC<ICard> = React.memo (({ name, email, cell, dob, location, picture, isActive }) => {
 	return (
 		<div className={`${styles.container} ${isActive ? styles.active : ""}`}>
 			<div className={styles.heading}>
@@ -65,6 +68,6 @@ const Card: React.FC<ICard> = ({ name, email, cell, dob, location, picture, isAc
 			</div>
 		</div>
 	);
-};
+});
 
 export default Card;

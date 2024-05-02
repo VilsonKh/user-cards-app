@@ -1,15 +1,16 @@
 import { UserInputContext } from "../../context/context";
+import { useDebouncer } from "../../utils/utils";
 import styles from "./SearchBar.module.scss";
 
-import { ChangeEvent, memo, useCallback, useContext } from "react";
+import { ChangeEvent, memo, useContext, useState  } from "react";
 
 const SearchBar = memo(() => {
-
-	const {setUserInput} = useContext(UserInputContext)
-	console.log("SearchBar")
-	const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-		setUserInput(event.target.value)
-	},[])
+	const { setUserInput } = useContext(UserInputContext);
+	const [inputValue, setInputValue] = useState<string>("");
+useDebouncer(inputValue, 300, setUserInput);
+	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+		setInputValue(event.target.value);
+	}
 
 	return (
 		<input
